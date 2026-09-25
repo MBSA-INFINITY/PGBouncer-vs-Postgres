@@ -1,0 +1,85 @@
+---
+# Test 1: load generator hitting Postgres directly (baseline, no pooler in the path).
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: loadgen-direct-pg
+  labels:
+    app: loadgen
+    app.kubernetes.io/part-of: pgbouncer-poc-loadgen
+    app.kubernetes.io/component: test1-direct
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: loadgen
+        app.kubernetes.io/part-of: pgbouncer-poc-loadgen
+        app.kubernetes.io/component: test1-direct
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: sk-quay
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: loadgen
+          image: <image_registry>/loadgen-pgb-poc:v1
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          env:
+            - name: TARGET_HOST
+              value: "pg-poc"
+            - name: TARGET_PORT
+              value: "5432"
+            - name: TEST_LABEL
+              value: "test1-direct-postgres"
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: pg-poc-credentials
+                  key: POSTGRES_DB
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pg-poc-credentials
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pg-poc-credentials
+                  key: POSTGRES_PASSWORD
+            - name: CONCURRENCY
+              value: "50"
+            - name: DURATION_SECONDS
+              value: "180"
+            - name: RAMP_UP_SECONDS
+              value: "5"
+            - name: CONNECTION_MODE
+              value: "persistent" # persistent | churn
+            - name: WORKLOAD
+              value: "mixed" # read_only | read_write | mixed
+            - name: WRITE_RATIO
+              value: "0.2"
+            - name: TABLE_ROWS
+              value: "100000"
+            - name: INIT_SCHEMA
+              value: "false"
+            - name: REPORT_INTERVAL_SECONDS
+              value: "5"
+            - name: CONNECT_TIMEOUT_SECONDS
+              value: "10"
+            - name: STATEMENT_TIMEOUT_MS
+              value: "30000"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 256Mi

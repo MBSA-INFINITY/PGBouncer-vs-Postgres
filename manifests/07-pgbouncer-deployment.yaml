@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgbouncer-poc
+  labels:
+    app: pgbouncer-poc
+    app.kubernetes.io/part-of: pgbouncer-poc
+    app.kubernetes.io/component: pooler
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: pgbouncer-poc
+  template:
+    metadata:
+      labels:
+        app: pgbouncer-poc
+        app.kubernetes.io/part-of: pgbouncer-poc
+    spec:
+      imagePullSecrets:
+        - name: quay-edm-common
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: pgbouncer-cfg
+          configMap:
+            name: pgbouncer-poc-config
+        - name: pgbouncer-userlist
+          secret:
+            secretName: pgbouncer-poc-userlist
+      containers:
+        - name: pgbouncer
+          image: <image_registry>/pgbouncer:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: database
+              containerPort: 5432
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - mountPath: /etc/pgbouncer/pgbouncer.ini
+              name: pgbouncer-cfg
+              subPath: pgbouncer.ini
+            - mountPath: /etc/pgbouncer/userlist.txt
+              name: pgbouncer-userlist
+              subPath: userlist.txt
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgbouncer-poc
+  labels:
+    app: pgbouncer-poc
+    app.kubernetes.io/part-of: pgbouncer-poc
+spec:
+  selector:
+    app: pgbouncer-poc
+  ports:
+    - name: database
+      port: 5432
+      targetPort: 5432

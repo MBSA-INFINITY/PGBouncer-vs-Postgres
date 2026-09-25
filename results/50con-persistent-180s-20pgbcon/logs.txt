@@ -1,0 +1,75 @@
+[loadgen] label='test1-direct-postgres' target=pg-poc:5432/pocdb mode=persistent workload=mixed concurrency=50 duration=180s ramp_up=5s
+[progress] t=   5.0s tx=   25342 tps= 5045.2 p50=3.72ms p95=12.68ms p99=34.75ms errors=0
+[progress] t=  10.0s tx=   59695 tps= 5949.0 p50=3.75ms p95=27.19ms p99=40.10ms errors=0
+[progress] t=  15.1s tx=   96344 tps= 6395.1 p50=3.74ms p95=29.15ms p99=46.62ms errors=0
+[progress] t=  20.1s tx=  132048 tps= 6564.5 p50=3.75ms p95=29.78ms p99=45.21ms errors=0
+[progress] t=  25.2s tx=  168034 tps= 6670.6 p50=3.75ms p95=30.68ms p99=46.41ms errors=0
+[progress] t=  30.3s tx=  204171 tps= 6741.3 p50=3.75ms p95=31.72ms p99=48.40ms errors=0
+[progress] t=  35.4s tx=  238220 tps= 6728.6 p50=3.76ms p95=31.73ms p99=48.46ms errors=0
+[progress] t=  40.5s tx=  273999 tps= 6757.7 p50=3.76ms p95=31.51ms p99=47.89ms errors=0
+[progress] t=  45.7s tx=  306723 tps= 6709.9 p50=3.76ms p95=31.70ms p99=48.75ms errors=0
+[progress] t=  50.9s tx=  341771 tps= 6714.8 p50=3.77ms p95=32.12ms p99=48.95ms errors=0
+[progress] t=  56.1s tx=  378331 tps= 6739.9 p50=3.76ms p95=32.32ms p99=50.43ms errors=0
+[progress] t=  61.4s tx=  414306 tps= 6751.5 p50=3.76ms p95=32.65ms p99=50.48ms errors=0
+[progress] t=  66.6s tx=  452550 tps= 6792.1 p50=3.76ms p95=32.84ms p99=50.93ms errors=0
+[progress] t=  71.9s tx=  490602 tps= 6821.0 p50=3.75ms p95=32.85ms p99=51.38ms errors=0
+[progress] t=  77.3s tx=  527195 tps= 6824.4 p50=3.75ms p95=32.79ms p99=51.07ms errors=0
+[progress] t=  82.6s tx=  561674 tps= 6799.0 p50=3.76ms p95=32.82ms p99=51.63ms errors=0
+[progress] t=  88.0s tx=  597703 tps= 6789.3 p50=3.75ms p95=32.58ms p99=51.94ms errors=0
+[progress] t=  93.5s tx=  633270 tps= 6776.4 p50=3.75ms p95=32.41ms p99=51.72ms errors=0
+[progress] t=  98.9s tx=  670109 tps= 6774.9 p50=3.75ms p95=32.54ms p99=51.45ms errors=0
+[progress] t= 104.4s tx=  706986 tps= 6772.3 p50=3.75ms p95=32.73ms p99=51.36ms errors=0
+[progress] t= 109.9s tx=  741413 tps= 6744.5 p50=3.75ms p95=32.75ms p99=52.04ms errors=0
+[progress] t= 115.5s tx=  775995 tps= 6720.0 p50=3.76ms p95=32.86ms p99=52.03ms errors=0
+[progress] t= 121.0s tx=  812088 tps= 6708.8 p50=3.76ms p95=32.62ms p99=51.88ms errors=0
+[progress] t= 126.7s tx=  849159 tps= 6703.8 p50=3.76ms p95=32.69ms p99=51.71ms errors=0
+[progress] t= 132.3s tx=  885428 tps= 6692.4 p50=3.76ms p95=32.62ms p99=51.46ms errors=0
+[progress] t= 138.0s tx=  921938 tps= 6681.0 p50=3.76ms p95=32.78ms p99=51.42ms errors=0
+[progress] t= 143.7s tx=  959038 tps= 6674.4 p50=3.75ms p95=32.97ms p99=51.67ms errors=0
+[progress] t= 149.5s tx=  994705 tps= 6655.1 p50=3.75ms p95=33.14ms p99=51.73ms errors=0
+[progress] t= 155.4s tx= 1031373 tps= 6636.3 p50=3.75ms p95=32.99ms p99=51.54ms errors=0
+[progress] t= 161.3s tx= 1068202 tps= 6622.7 p50=3.75ms p95=33.03ms p99=51.39ms errors=0
+[progress] t= 167.2s tx= 1105313 tps= 6612.4 p50=3.75ms p95=33.06ms p99=51.26ms errors=0
+[progress] t= 173.1s tx= 1142419 tps= 6601.5 p50=3.75ms p95=32.88ms p99=51.12ms errors=0
+[progress] t= 179.0s tx= 1177826 tps= 6579.1 p50=3.75ms p95=32.89ms p99=51.54ms errors=0
+[progress] t= 185.0s tx= 1212510 tps= 6554.1 p50=3.76ms p95=32.93ms p99=51.81ms errors=0
+RESULT_JSON: {"label": "test1-direct-postgres", "target_host": "pg-poc", "target_port": 5432, "connection_mode": "persistent", "workload": "mixed", "concurrency": 50, "requested_duration_s": 180, "elapsed_s": 186.1, "total_transactions": 1212701, "successful_transactions": 1212701, "total_errors": 0, "error_breakdown": {}, "throughput_tps": 6516.23, "latency_ms": {"min": 2.61, "mean": 7.56, "p50": 3.76, "p90": 14.38, "p95": 32.96, "p99": 51.89, "max": 1027.77}, "connect_latency_ms": {"min": 12.64, "mean": 16.15, "p50": 14.93, "p95": 24.46, "max": 26.16}}
+
+
+
+
+
+[loadgen] label='test2-via-pgbouncer' target=pgbouncer-poc:5432/pocdb mode=persistent workload=mixed concurrency=50 duration=180s ramp_up=5s
+[progress] t=   5.0s tx=   42077 tps= 8398.6 p50=2.23ms p95=6.02ms p99=25.42ms errors=0
+[progress] t=  10.0s tx=   98067 tps= 9779.7 p50=2.95ms p95=8.87ms p99=26.68ms errors=0
+[progress] t=  15.1s tx=  155278 tps=10297.9 p50=3.04ms p95=9.42ms p99=26.44ms errors=0
+[progress] t=  20.2s tx=  214271 tps=10626.6 p50=3.06ms p95=9.52ms p99=25.94ms errors=0
+[progress] t=  25.3s tx=  271742 tps=10741.9 p50=3.08ms p95=9.33ms p99=26.47ms errors=0
+[progress] t=  30.5s tx=  329638 tps=10825.3 p50=3.09ms p95=10.24ms p99=26.04ms errors=0
+[progress] t=  35.7s tx=  379028 tps=10621.2 p50=3.10ms p95=11.56ms p99=26.66ms errors=0
+[progress] t=  40.9s tx=  437409 tps=10682.0 p50=3.10ms p95=11.44ms p99=26.53ms errors=0
+[progress] t=  46.3s tx=  494697 tps=10695.8 p50=3.11ms p95=11.74ms p99=26.14ms errors=0
+[progress] t=  51.6s tx=  552059 tps=10702.4 p50=3.11ms p95=11.87ms p99=25.86ms errors=0
+[progress] t=  57.0s tx=  607090 tps=10643.0 p50=3.12ms p95=12.27ms p99=25.66ms errors=0
+[progress] t=  62.7s tx=  664651 tps=10592.3 p50=3.12ms p95=12.25ms p99=25.75ms errors=0
+[progress] t=  68.2s tx=  721127 tps=10567.7 p50=3.12ms p95=12.30ms p99=25.68ms errors=0
+[progress] t=  73.8s tx=  776191 tps=10521.5 p50=3.12ms p95=12.36ms p99=25.74ms errors=0
+[progress] t=  79.4s tx=  834120 tps=10509.0 p50=3.12ms p95=12.38ms p99=25.53ms errors=0
+[progress] t=  85.0s tx=  891208 tps=10482.7 p50=3.12ms p95=12.33ms p99=25.80ms errors=0
+[progress] t=  90.7s tx=  949887 tps=10467.5 p50=3.12ms p95=12.36ms p99=25.61ms errors=0
+[progress] t=  96.8s tx= 1006167 tps=10392.4 p50=3.12ms p95=12.34ms p99=25.86ms errors=0
+[progress] t= 102.7s tx= 1061451 tps=10333.5 p50=3.14ms p95=12.38ms p99=25.68ms errors=0
+[progress] t= 108.6s tx= 1115800 tps=10270.9 p50=3.14ms p95=12.52ms p99=25.55ms errors=0
+[progress] t= 114.6s tx= 1167225 tps=10181.0 p50=3.15ms p95=12.69ms p99=25.70ms errors=0
+[progress] t= 120.8s tx= 1224899 tps=10139.4 p50=3.15ms p95=12.64ms p99=25.87ms errors=0
+[progress] t= 126.9s tx= 1282023 tps=10101.1 p50=3.15ms p95=12.62ms p99=25.84ms errors=0
+[progress] t= 133.1s tx= 1338929 tps=10061.3 p50=3.15ms p95=12.68ms p99=25.70ms errors=0
+[progress] t= 139.3s tx= 1394057 tps=10009.8 p50=3.15ms p95=12.70ms p99=25.78ms errors=0
+[progress] t= 145.5s tx= 1446682 tps= 9940.7 p50=3.15ms p95=12.79ms p99=25.89ms errors=0
+[progress] t= 152.0s tx= 1504492 tps= 9899.1 p50=3.15ms p95=12.78ms p99=25.80ms errors=0
+[progress] t= 158.5s tx= 1561305 tps= 9850.7 p50=3.15ms p95=12.74ms p99=25.92ms errors=0
+[progress] t= 165.1s tx= 1617850 tps= 9796.5 p50=3.15ms p95=12.76ms p99=25.86ms errors=0
+[progress] t= 171.9s tx= 1669892 tps= 9713.2 p50=3.16ms p95=12.84ms p99=25.85ms errors=0
+[progress] t= 178.8s tx= 1727587 tps= 9659.7 p50=3.17ms p95=12.75ms p99=25.73ms errors=0
+[progress] t= 185.0s tx= 1779296 tps= 9617.8 p50=3.16ms p95=12.67ms p99=25.69ms errors=0
+RESULT_JSON: {"label": "test2-via-pgbouncer", "target_host": "pgbouncer-poc", "target_port": 5432, "connection_mode": "persistent", "workload": "mixed", "concurrency": 50, "requested_duration_s": 180, "elapsed_s": 186.98, "total_transactions": 1779461, "successful_transactions": 1779461, "total_errors": 0, "error_breakdown": {}, "throughput_tps": 9516.92, "latency_ms": {"min": 0.92, "mean": 5.18, "p50": 3.16, "p90": 5.49, "p95": 12.69, "p99": 25.73, "max": 1910.32}, "connect_latency_ms": {"min": 3.32, "mean": 8.23, "p50": 8.71, "p95": 14.82, "max": 29.19}}

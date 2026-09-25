@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pg-poc
+  labels:
+    app: pg-poc
+    app.kubernetes.io/part-of: pgbouncer-poc
+    app.kubernetes.io/component: database
+spec:
+  replicas: 1
+  # RWO PVC can only be mounted by one pod at a time - never roll two pods concurrently.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pg-poc
+  template:
+    metadata:
+      labels:
+        app: pg-poc
+        app.kubernetes.io/part-of: pgbouncer-poc
+    spec:
+      imagePullSecrets:
+        - name: quay-edm-common
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: postgres
+          image: <image_registry>/postgres:16.6
+          ports:
+            - name: database
+              containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: pg-poc-credentials
+          env:
+            # subdir avoids the "lost+found" non-empty-dir warning on a fresh PVC mount
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          # Deliberately capped low so Test 1 (direct connections) can visibly exhaust it
+          # at concurrency levels PGBouncer (Test 2) absorbs via pooling. Raise/lower to
+          # match whatever scale story you want to demonstrate.
+          args:
+            - "-c"
+            - "max_connections=100"
+            - "-c"
+            - "shared_buffers=256MB"
+            - "-c"
+            - "log_connections=on"
+            - "-c"
+            - "log_disconnections=on"
+            - "-c"
+            - "log_min_duration_statement=500"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "poc_user", "-d", "pocdb"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "poc_user", "-d", "pocdb"]
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pg-poc-data

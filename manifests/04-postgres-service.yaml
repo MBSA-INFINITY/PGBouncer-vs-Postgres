@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pg-poc
+  labels:
+    app: pg-poc
+    app.kubernetes.io/part-of: pgbouncer-poc
+spec:
+  selector:
+    app: pg-poc
+  ports:
+    - name: database
+      port: 5432
+      targetPort: 5432
